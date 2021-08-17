@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MercadoLibreApp</string>
+    <string name="search_text">¿Qué deseas comprar?</string>
 </resources>
