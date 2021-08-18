@@ -25,7 +25,6 @@ import com.yeferic.mercadolibreapp.adapters.ItemsAdapter;
 import com.yeferic.mercadolibreapp.databinding.MainFragmentBinding;
 import com.yeferic.mercadolibreapp.intarfaces.ICustomClickListener;
 import com.yeferic.mercadolibreapp.intarfaces.IDataServices;
-import com.yeferic.mercadolibreapp.model.Item;
 import com.yeferic.mercadolibreapp.model.Paging;
 import com.yeferic.mercadolibreapp.model.QueryResult;
 import com.yeferic.mercadolibreapp.repo.RetrofitClient;
@@ -52,15 +51,15 @@ public class MainFragment extends Fragment implements ICustomClickListener {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
         binding.setLifecycleOwner(this);
+        createViewModelHandlers();
         createWidgetHandlers();
         return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        createViewModelHandlers();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mViewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     }
 
     private void createViewModelHandlers() {
@@ -148,6 +147,13 @@ public class MainFragment extends Fragment implements ICustomClickListener {
 
     @Override
     public void onItemClick(int p) {
-        Toast.makeText(getContext(), "No fue posible completar la búsqueda, inténtalo de nuevo.", Toast.LENGTH_LONG).show();
+
+        mViewModel.setIdItemSelected(mViewModel.getQueryResult().getValue().getProductos().get(p).id);
+
+        DetailFragment detailFragment = new DetailFragment();
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.container, detailFragment)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
     }
 }

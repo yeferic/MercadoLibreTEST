@@ -3,13 +3,14 @@ package com.yeferic.mercadolibreapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yeferic.mercadolibreapp.databinding.ListAttributeBinding;
 import com.yeferic.mercadolibreapp.databinding.ListItemBinding;
 import com.yeferic.mercadolibreapp.intarfaces.ICustomClickListener;
+import com.yeferic.mercadolibreapp.model.Attribute;
 import com.yeferic.mercadolibreapp.model.Item;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,62 +18,45 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> implements ICustomClickListener {
+public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.AttributeViewHolder> {
 
-    private ICustomClickListener fragmentListener;
-    private List<Item> items;
+    private List<Attribute> attributes;
 
-    public ItemsAdapter(ICustomClickListener fragment, List<Item> lsItems){
-        this.fragmentListener = fragment;
-        this.items = lsItems == null ? new ArrayList<>() : lsItems;
+    public AttributeAdapter(List<Attribute> lsAttributes){
+        this.attributes = lsAttributes == null ? new ArrayList<>() : lsAttributes;
     }
 
     @NonNull
     @NotNull
     @Override
-    public ItemViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public AttributeViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ListItemBinding itemBinding = ListItemBinding.inflate(layoutInflater, parent, false);
-        return new ItemViewHolder(itemBinding, this);
+        ListAttributeBinding attributeBinding = ListAttributeBinding.inflate(layoutInflater, parent, false);
+        return new AttributeViewHolder(attributeBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ItemViewHolder holder, int position) {
-        Item product = items.get(position);
-        holder.setItemToBinding(product);
+    public void onBindViewHolder(@NonNull @NotNull AttributeViewHolder holder, int position) {
+        Attribute attribute = attributes.get(position);
+        holder.setItemToBinding(attribute);
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return attributes.size();
     }
 
-    @Override
-    public void onItemClick(int p) {
-        fragmentListener.onItemClick(p);
-    }
+    public class AttributeViewHolder extends RecyclerView.ViewHolder {
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private ListAttributeBinding binding;
 
-        private ListItemBinding binding;
-        private ICustomClickListener listener;
-
-        public ItemViewHolder(ListItemBinding binding, ICustomClickListener clickListener){
+        public AttributeViewHolder(ListAttributeBinding binding){
             super(binding.getRoot());
             this.binding = binding;
-            this.listener = clickListener;
-            itemView.setOnClickListener(this);
         }
 
-        public void setItemToBinding(Item item) {
-            binding.setListItem(item);
-            binding.executePendingBindings();
-        }
-
-        @Override
-        public void onClick(View view) {
-            this.listener.onItemClick(getAdapterPosition());
+        public void setItemToBinding(Attribute item) {
+            binding.setAttribute(item);
         }
     }
-
 }

@@ -1,62 +1,61 @@
 package com.yeferic.mercadolibreapp.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yeferic.mercadolibreapp.databinding.ListAttributeBinding;
-import com.yeferic.mercadolibreapp.databinding.ListItemBinding;
-import com.yeferic.mercadolibreapp.intarfaces.ICustomClickListener;
+import com.yeferic.mercadolibreapp.databinding.ListPictureBinding;
 import com.yeferic.mercadolibreapp.model.Attribute;
-import com.yeferic.mercadolibreapp.model.Item;
+import com.yeferic.mercadolibreapp.model.Picture;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.AttributeViewHolder> {
+public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureViewHolder> {
 
-    private List<Attribute> attributes;
+    private List<Picture> pictures;
 
-    public AttributeAdapter(List<Attribute> lsAttributes){
-        this.attributes = lsAttributes == null ? new ArrayList<>() : lsAttributes;
+    public PictureAdapter(List<Picture> lsPictures){
+        this.pictures = lsPictures == null ? new ArrayList<>() : lsPictures;
     }
 
     @NonNull
     @NotNull
     @Override
-    public AttributeViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public PictureViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ListAttributeBinding attributeBinding = ListAttributeBinding.inflate(layoutInflater, parent, false);
-        return new AttributeViewHolder(attributeBinding);
+        ListPictureBinding pictureBinding = ListPictureBinding.inflate(layoutInflater, parent, false);
+        return new PictureViewHolder(pictureBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull AttributeViewHolder holder, int position) {
-        Attribute product = attributes.get(position);
-        holder.setItemToBinding(product);
+    public void onBindViewHolder(@NonNull @NotNull PictureViewHolder holder, int position) {
+        Picture picture = pictures.get(position);
+        holder.setItemToBinding(picture);
     }
 
     @Override
     public int getItemCount() {
-        return attributes.size();
+        return pictures.size();
     }
 
-    public class AttributeViewHolder extends RecyclerView.ViewHolder {
+    public class PictureViewHolder extends RecyclerView.ViewHolder {
 
-        private ListAttributeBinding binding;
+        private ListPictureBinding binding;
 
-        public AttributeViewHolder(ListAttributeBinding binding){
+        public PictureViewHolder(ListPictureBinding binding){
             super(binding.getRoot());
             this.binding = binding;
+            this.binding.executePendingBindings();
         }
 
-        public void setItemToBinding(Attribute item) {
-            binding.setAttribute(item);
+        public void setItemToBinding(Picture item) {
+            binding.setPicture(item);
         }
     }
 }
