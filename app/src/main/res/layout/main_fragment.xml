@@ -11,6 +11,7 @@
         tools:context=".ui.main.MainFragment">
 
         <ProgressBar
+            android:id="@+id/pbSearchMF"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,9 +34,12 @@
             app:layout_constraintTop_toBottomOf="@+id/txtSearchMF">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lsItemsMF"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/list_item">
+                android:background="@color/white"
+                tools:listitem="@layout/list_item"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
             </androidx.recyclerview.widget.RecyclerView>
 
